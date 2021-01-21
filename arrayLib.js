@@ -78,6 +78,35 @@ class ArrayLib {
 		}
 		return new Error("isEqual expects two arrays as arguments");
 	}
+	reduceTo(_inputArray, _value = 0, _startFrom = 0) {
+		const inputArray = _inputArray;
+		const value = _value;
+		const output = [];
+		const length = inputArray.length;
+		const startFrom = _startFrom;
+		const netArrayLength = length - startFrom; /// needed for check for smaller arrays
+		if (!isNaN(value) && !isNaN(startFrom)) {
+			if (value === length && startFrom === 0) {
+				return inputArray;
+			} else if (value >= 0 && netArrayLength >= value) {
+				for (let i = startFrom; i < value + startFrom; i++) {
+					output.push(inputArray[i]);
+				}
+				return output;
+			} else if (value >= 0 && netArrayLength <= value) {
+				for (let i = startFrom; i < length; i++) {
+					output.push(inputArray[i]);
+				}
+				return output;
+			}
+			return new Error(
+				"reduceTo function expects a possitive number as second argument"
+			);
+		}
+		return new Error(
+			"reduceTo function expects a number as second argument and third Argument"
+		);
+	}
 	sort(_inputArray) {
 		const inputArray = _inputArray;
 		const length = inputArray.length;
@@ -94,7 +123,7 @@ class ArrayLib {
 			for (let i = 0; i < slicedArrayLength; i++) {
 				elBubbleSortedArray.push(bubbleSort(slicedArray[i]));
 			}
-			console.log(elBubbleSortedArray);
+			//console.log(elBubbleSortedArray);
 			for (let i = 0; i < length; i++) {}
 			sortedArray = bubbleArraySort(elBubbleSortedArray, 0);
 
@@ -212,6 +241,7 @@ class ArrayLib {
 const td = new ArrayLib();
 //console.log());
 const m = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-console.log(td.sort([1, 2]));
+//console.log(td.sort([1, 2]));
 //console.log(td.sliceBy([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3));
 //console.log(td.sliceBy(, 3));
+console.log(td.reduceTo([1, 2, 3, 4, 5], 6));
