@@ -78,7 +78,7 @@ class ArrayLib {
 		}
 		return new Error("isEqual expects two arrays as arguments");
 	}
-	reduceTo(_inputArray, _value = 0, _startFrom = 0) {
+	reduceTo(_inputArray, _value = _inputArray.length, _startFrom = 0) {
 		const inputArray = _inputArray;
 		const value = _value;
 		const output = [];
@@ -112,10 +112,12 @@ class ArrayLib {
 		const length = inputArray.length;
 		let slicedArray = [];
 		let elBubbleSortedArray = [];
+		let arBubbleSortedArray = [];
+		let sortedArray;
 		let outputArray = [];
 		if (Array.isArray(inputArray)) {
 			if (length <= 3) {
-				let sortedArray = bubbleSort(inputArray);
+				sortedArray = bubbleSort(inputArray);
 				return sortedArray;
 			}
 			slicedArray = this.sliceBy(inputArray, 3);
@@ -123,9 +125,18 @@ class ArrayLib {
 			for (let i = 0; i < slicedArrayLength; i++) {
 				elBubbleSortedArray.push(bubbleSort(slicedArray[i]));
 			}
-			//console.log(elBubbleSortedArray);
-			for (let i = 0; i < length; i++) {}
-			sortedArray = bubbleArraySort(elBubbleSortedArray, 0);
+
+			// let reducedArray = this.reduceTo(elBubbleSortedArray, 3, 0);
+			// console.log(reducedArray);
+			//let reducedArray;
+			for (let i = 0; i < elBubbleSortedArray.length; i += 3) {
+				let reducedArray = this.reduceTo(elBubbleSortedArray, 3, i);
+				for (let j = 0; j < reducedArray.length; j++) {
+					sortedArray = bubbleArraySort(reducedArray, j);
+				}
+				arBubbleSortedArray.push(sortedArray);
+			}
+			console.log(arBubbleSortedArray);
 
 			//outputArray = [].concat(slicedArray);
 			//slicedArray = sortElement(slicedArray);
@@ -155,8 +166,10 @@ class ArrayLib {
 			let array = _inputArray;
 			const length = array.length;
 			if (length < 3) {
-				for (let i = 0; i < length; i++) {
-					return compareNextArrayElement(array, i);
+				if (length !== 1) {
+					for (let i = 0; i < length; i++) {
+						return compareNextArrayElement(array, i);
+					}
 				}
 			} else {
 				if (index == 0) {
@@ -164,10 +177,22 @@ class ArrayLib {
 				} else if (index == length - 1) {
 					return array;
 				} else {
-					array = comaparePreviousArrayElement(array, index);
 					array = compareNextArrayElement(array, index);
+					array = comaparePreviousArrayElement(array, index);
 				}
 			}
+			// else {
+			// 	for (let i = 0; i < length; i++) {
+			// 		if (i == 0) {
+			// 			array = compareNextElement(array, i);
+			// 		} else if (i == length - 1) {
+			// 			return array;
+			// 		} else {
+			// 			array = compareNextElement(array, i);
+			// 			array = comaparePreviousElement(array, i);
+			// 		}
+			// 	}
+			// }
 			return array;
 		}
 		function compareNextArrayElement(_inputArray, _index) {
@@ -175,9 +200,9 @@ class ArrayLib {
 			const index = _index;
 			const inputArray = _inputArray;
 			if (inputArray[index][0] < inputArray[index + 1][0]) {
-				swap = inputArray[index][0];
-				inputArray[index][0] = inputArray[index + 1][0];
-				inputArray[index + 1][0] = swap;
+				swap = inputArray[index];
+				inputArray[index] = inputArray[index + 1];
+				inputArray[index + 1] = swap;
 			}
 			return inputArray;
 		}
@@ -185,9 +210,9 @@ class ArrayLib {
 			let swap;
 			const inputArray = _inputArray;
 			if (inputArray[index - 1][0] < inputArray[index][0]) {
-				swap = inputArray[index - 1][0];
-				inputArray[index - 1][0] = inputArray[index][0];
-				inputArray[index][0] = swap;
+				swap = inputArray[index - 1];
+				inputArray[index - 1] = inputArray[index];
+				inputArray[index] = swap;
 			}
 			return inputArray;
 		}
@@ -241,7 +266,8 @@ class ArrayLib {
 const td = new ArrayLib();
 //console.log());
 const m = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-//console.log(td.sort([1, 2]));
+console.log();
+td.sort(m);
 //console.log(td.sliceBy([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3));
 //console.log(td.sliceBy(, 3));
-console.log(td.reduceTo([1, 2, 3, 4, 5], 6));
+// console.log(td.reduceTo([1, 2, 3, 4, 5]));
