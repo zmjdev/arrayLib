@@ -81,46 +81,113 @@ class ArrayLib {
 	sort(_inputArray) {
 		const inputArray = _inputArray;
 		const length = inputArray.length;
-		const outputArray = [];
+		let slicedArray = [];
+		let elBubbleSortedArray = [];
+		let outputArray = [];
 		if (Array.isArray(inputArray)) {
 			if (length <= 3) {
 				let sortedArray = bubbleSort(inputArray);
 				return sortedArray;
 			}
-			let slicedArray = this.sliceBy(inputArray, 3);
+			slicedArray = this.sliceBy(inputArray, 3);
 			const slicedArrayLength = slicedArray.length;
-			slicedArray = bubbleSort(slicedArray);
-			slicedArray = bubbleArraySort(slicedArray);
-			outputArray = [].concat(slicedArray);
-			slicedArray = sortElement(slicedArray);
-			while (!this.isEqual(outputArray, slicedArray)) {
-				outputArray = [].concat(slicedArray);
-				slicedArray = bubbleArraySort(slicedArray);
-				slicedArray = sortElement(slicedArray);
+			for (let i = 0; i < slicedArrayLength; i++) {
+				elBubbleSortedArray.push(bubbleSort(slicedArray[i]));
 			}
-			return outputArray;
+			console.log(elBubbleSortedArray);
+			for (let i = 0; i < length; i++) {}
+			sortedArray = bubbleArraySort(elBubbleSortedArray, 0);
+
+			//outputArray = [].concat(slicedArray);
+			//slicedArray = sortElement(slicedArray);
+			// while (!this.isEqual(outputArray, slicedArray)) {
+			// 	for (let i = 0; i < length; i++) {
+			// 		outputArray = [].concat(slicedArray, i);
+			// 		slicedArray = bubbleSort(slicedArray, i);
+			// 		slicedArray = bubbleArraySort(slicedArray, i);
+			// 		slicedArray = sortElement(slicedArray, i);
+			// 	}
+			// }
+			// return outputArray;
 		}
-		function bubbleSort(_inputArray) {
-			const array = _inputArray;
+		// function sortElement(_inputArray, index) {
+		// 	const array = _inputArray;
+		// 	const length = array.length;
+		// 	for (let j = 0; j < length; j++) {
+		// 		if (array[index][index + 1] < array[index + 1][j]) {
+		// 			swap();
+		// 			return array;
+		// 		}
+		// 		break;
+		// 	}
+		// }
+		function bubbleArraySort(_inputArray, _index) {
+			const index = _index;
+			let array = _inputArray;
 			const length = array.length;
 			if (length < 3) {
 				for (let i = 0; i < length; i++) {
-					return compareNextElement(array, i);
+					return compareNextArrayElement(array, i);
 				}
 			} else {
-				if (i == 0) {
-					array = compareNextElement(array, i);
-				} else if (i == length - 1) {
+				if (index == 0) {
+					array = compareNextArrayElement(array, index);
+				} else if (index == length - 1) {
 					return array;
 				} else {
-					array = comaparePreviousElement(array, i);
-					array = compareNextElement(array, i);
+					array = comaparePreviousArrayElement(array, index);
+					array = compareNextArrayElement(array, index);
 				}
 			}
 			return array;
 		}
-		function comaparePreviousElement(_inputArray, index) {
+		function compareNextArrayElement(_inputArray, _index) {
 			let swap;
+			const index = _index;
+			const inputArray = _inputArray;
+			if (inputArray[index][0] < inputArray[index + 1][0]) {
+				swap = inputArray[index][0];
+				inputArray[index][0] = inputArray[index + 1][0];
+				inputArray[index + 1][0] = swap;
+			}
+			return inputArray;
+		}
+		function comaparePreviousArrayElement(_inputArray, index) {
+			let swap;
+			const inputArray = _inputArray;
+			if (inputArray[index - 1][0] < inputArray[index][0]) {
+				swap = inputArray[index - 1][0];
+				inputArray[index - 1][0] = inputArray[index][0];
+				inputArray[index][0] = swap;
+			}
+			return inputArray;
+		}
+		function bubbleSort(_inputArray) {
+			let array = _inputArray;
+			const length = array.length;
+			if (length < 3) {
+				if (length !== 1) {
+					for (let i = 0; i < length; i++) {
+						return compareNextElement(array, i);
+					}
+				}
+			} else {
+				for (let i = 0; i < length; i++) {
+					if (i == 0) {
+						array = compareNextElement(array, i);
+					} else if (i == length - 1) {
+						return array;
+					} else {
+						array = compareNextElement(array, i);
+						array = comaparePreviousElement(array, i);
+					}
+				}
+			}
+			return array;
+		}
+		function comaparePreviousElement(_inputArray, _index) {
+			let swap;
+			const index = _index;
 			const inputArray = _inputArray;
 			if (inputArray[index - 1] < inputArray[index]) {
 				swap = inputArray[index - 1];
@@ -129,8 +196,9 @@ class ArrayLib {
 			}
 			return inputArray;
 		}
-		function compareNextElement(_inputArray, index) {
+		function compareNextElement(_inputArray, _index) {
 			let swap;
+			const index = _index;
 			const inputArray = _inputArray;
 			if (inputArray[index] < inputArray[index + 1]) {
 				swap = inputArray[index];
@@ -141,5 +209,9 @@ class ArrayLib {
 		}
 	}
 }
-const td = new toDoArrayLib();
-console.log(td.isEqual(3, [1, 2, 3]));
+const td = new ArrayLib();
+//console.log());
+const m = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+console.log(td.sort([1, 2]));
+//console.log(td.sliceBy([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3));
+//console.log(td.sliceBy(, 3));
