@@ -111,6 +111,18 @@ class ArrayLib {
 		_inputArray[index] = item;
 		return _inputArray;
 	}
+	max(_inputArray) {
+		const inputArray = _inputArray;
+		let max = inputArray[0];
+		for (let i = 0; i < inputArray.length; i++) {
+			console.log("im in");
+			if (inputArray[i] > max) {
+				max = inputArray[i];
+				console.log("im in");
+			}
+		}
+		return max;
+	}
 	sort(_inputArray) {
 		const inputArray = _inputArray;
 		const length = inputArray.length;
@@ -156,10 +168,16 @@ class ArrayLib {
 								arBubbleSortedArray[k][i] = swap;
 								changedIndex = { a: i, b: j };
 								for (let i = 0; i < 3; i++) {
-									this.insert(arBubbleSortedArray,(
+									this.insert(
+										arBubbleSortedArray,
+										k,
 										bubbleSort(arBubbleSortedArray[k][i])
 									);
 								}
+								for (let j = 0; j < reducedArray.length; j++) {
+									arSortedArray = bubbleArraySort(reducedArray, j);
+								}
+
 								break;
 							}
 						}
@@ -297,6 +315,7 @@ class ArrayLib {
 	}
 }
 const td = new ArrayLib();
+console.log(td.max([-1, -2]));
 // //console.log());
 // const m = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 // console.log();
@@ -304,4 +323,4 @@ const td = new ArrayLib();
 //console.log(td.sliceBy([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3));
 //console.log(td.sliceBy(, 3));
 // console.log(td.reduceTo([1, 2, 3, 4, 5]));
-console.log(td.insert([0, 0, 0, 0, 0, 0], 3, 5));
+//console.log(td.insert([0, 0, 0, 0, 0, 0], 3, 5));
