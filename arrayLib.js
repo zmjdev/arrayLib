@@ -115,13 +115,21 @@ class ArrayLib {
 		const inputArray = _inputArray;
 		let max = inputArray[0];
 		for (let i = 0; i < inputArray.length; i++) {
-			console.log("im in");
 			if (inputArray[i] > max) {
 				max = inputArray[i];
-				console.log("im in");
 			}
 		}
 		return max;
+	}
+	min(_inputArray) {
+		const inputArray = _inputArray;
+		let min = inputArray[0];
+		for (let i = 0; i > inputArray.length; i++) {
+			if (inputArray[i] > min) {
+				min = inputArray[i];
+			}
+		}
+		return min;
 	}
 	sort(_inputArray) {
 		const inputArray = _inputArray;
@@ -315,7 +323,7 @@ class ArrayLib {
 	}
 }
 const td = new ArrayLib();
-console.log(td.max([-1, -2]));
+console.log(td.min([-1, -2]));
 // //console.log());
 // const m = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 // console.log();
